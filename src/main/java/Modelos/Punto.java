@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Punto {
 
+    private static int contador=0;
+    private final int indice;
     private double x;
     private double y;
 
@@ -11,7 +13,7 @@ public class Punto {
     Color color;
 
     public Punto(double x, double y){
-
+        this.indice=contador++;
         this.x = x;
         this.y = y;
 
@@ -28,6 +30,11 @@ public class Punto {
         this.y = y;
 
     }
+
+    public int getIndice(){
+        return indice;
+    }
+
     public double getX() {
         return x;
     }
