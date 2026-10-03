@@ -4,5 +4,6 @@ module jeziel.graficaciondemallas {
     requires java.desktop;
 
     opens jeziel.graficaciondemallas to javafx.fxml;
+    opens Controles to javafx.fxml;
     exports jeziel.graficaciondemallas;
 }

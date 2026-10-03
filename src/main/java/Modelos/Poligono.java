@@ -26,8 +26,9 @@ public class Poligono {
         double prodCruz=0;
         int n=indicesVertices.length;
         for(int i=0;i<n;i++){
-            Punto p1= buscarVertice(vertices,indicesVertices[i]);
-            Punto p2= buscarVertice(vertices,indicesVertices[(i+1)%n]);
+
+            Punto p1 = buscarVertice(vertices, i);
+            Punto p2 = buscarVertice(vertices, (i + 1) % n);
             prodCruz+=(p1.getX()*p2.getY())-(p1.getY()*p2.getX());
         }
         return Math.abs(prodCruz/2);
