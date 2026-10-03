@@ -47,4 +47,30 @@ public class Malla {
     public List<Punto> getVertices() {
         return vertices;
     }
+
+    public boolean eliminarPoligono(int indice) {
+        if (indice >= 0 && indice < poligonos.size()) {
+            poligonos.remove(indice);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean eliminarVertice(int indice) {
+        if (indice < 0 || indice >= vertices.size()) {
+            return false;
+        }
+
+        vertices.remove(indice);
+
+        for (Poligono pol : poligonos) {
+            int[] indices = pol.getIndicesVertices();
+            int[] nuevosIndices = java.util.Arrays.stream(indices)
+                    .filter(idx -> idx != indice)
+                    .map(idx -> idx > indice ? idx - 1 : idx)
+                    .toArray();
+            pol.setIndicesVertices(nuevosIndices);
+        }
+        return true;
+    }
 }
