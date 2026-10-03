@@ -6,6 +6,7 @@
 <AnchorPane prefHeight="723.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controles.VentanaPrincipalController">
    <children>
       <Pane layoutX="14.0" layoutY="4.0" prefHeight="723.0" prefWidth="1020.0">
+          <VBox fx:id="contenedorMallas" prefHeight="296.0" prefWidth="1033.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          <children>
             <SplitPane dividerPositions="0.5586206896551724" layoutX="-14.0" orientation="VERTICAL" prefHeight="727.0" prefWidth="1034.0">
               <items>
