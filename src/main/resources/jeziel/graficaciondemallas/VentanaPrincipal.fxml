@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controles.VentanaPrincipalController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="723.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controles.VentanaPrincipalController">
+   <children>
+      <Pane layoutX="14.0" layoutY="4.0" prefHeight="723.0" prefWidth="1020.0">
+         <children>
+            <SplitPane dividerPositions="0.5586206896551724" layoutX="-14.0" orientation="VERTICAL" prefHeight="727.0" prefWidth="1034.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="1032.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="324.0" prefWidth="1032.0">
+                     <children>
+                        <MenuBar>
+                          <menus>
+                            <Menu mnemonicParsing="false" text="Seleccionar menú">
+                              <items>
+                                <MenuItem id="MItemPnPoligono" mnemonicParsing="false" text="Panel de poligono" />
+                                    <MenuItem id="MItemPnMallas" mnemonicParsing="false" text="Panel de mallas" />
+                              </items>
+                            </Menu>
+                          </menus>
+                        </MenuBar>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
