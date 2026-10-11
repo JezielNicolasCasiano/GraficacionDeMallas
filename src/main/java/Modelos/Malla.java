@@ -14,11 +14,30 @@ public class Malla {
 
 
     public void agregarVertice(double x, double y) {
+        if (!Double.isFinite(x) || !Double.isFinite(y)) {
+            throw new IllegalArgumentException("Las coordenadas deben ser números finitos.");
+        }
+        for (int i = 0; i < vertices.size(); i++) {
+            Punto p = vertices.get(i);
+            if (p.getX() == x && p.getY() == y) {
+                throw new IllegalArgumentException("Ya existe el punto P" + i + " en esas coordenadas.");
+            }
+        }
         this.vertices.add(new Punto(x, y));
     }
 
     public void agregarPoligono(int... indices) {
-        this.poligonos.add(new Poligono(indices));
+        Poligono poligono = new Poligono(indices);
+        String error = poligono.validar(vertices);
+        if (error != null) {
+            throw new IllegalArgumentException(error);
+        }
+        for (int i = 0; i < poligonos.size(); i++) {
+            if (poligono.seEnciman(poligonos.get(i), vertices)) {
+                throw new IllegalArgumentException("El polígono se encima con el polígono " + i + ".");
+            }
+        }
+        this.poligonos.add(poligono);
     }
 
     public Punto[] obtenerPuntosDeCara(int numCara) {
@@ -38,6 +57,14 @@ public class Malla {
         }
 
         return puntosCara;
+    }
+
+    public List<Poligono> triangularPoligono(int numCara) {
+        return poligonos.get(numCara).triangular(vertices);
+    }
+
+    public void eliminarPoligonos() {
+        poligonos.clear();
     }
 
     public List<Poligono> getPoligonos() {
@@ -71,6 +98,7 @@ public class Malla {
                     .toArray();
             pol.setIndicesVertices(nuevosIndices);
         }
+        poligonos.removeIf(pol -> pol.validar(vertices) != null);
         return true;
     }
 }

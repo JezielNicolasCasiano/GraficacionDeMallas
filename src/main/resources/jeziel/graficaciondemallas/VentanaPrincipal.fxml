@@ -1,20 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="723.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controles.VentanaPrincipalController">
+<AnchorPane prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controles.VentanaPrincipalController">
    <children>
-      <Pane layoutX="14.0" layoutY="4.0" prefHeight="723.0" prefWidth="1020.0">
-          <VBox fx:id="contenedorMallas" prefHeight="296.0" prefWidth="1033.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-         <children>
-            <SplitPane dividerPositions="0.5586206896551724" layoutX="-14.0" orientation="VERTICAL" prefHeight="727.0" prefWidth="1034.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="1032.0" />
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="324.0" prefWidth="1032.0" />
-              </items>
-            </SplitPane>
-         </children>
-      </Pane>
+      <SplitPane dividerPositions="0.6" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <fx:include fx:id="planoCartesiano" source="Plano-cartesiano.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <HBox minHeight="0.0" spacing="6.0">
+               <children>
+                  <TabPane fx:id="pestanas" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+                     <tabs>
+                        <Tab fx:id="tabPuntos" text="Puntos">
+                           <content>
+                              <fx:include fx:id="panelPuntos" source="panelPuntos.fxml" />
+                           </content>
+                        </Tab>
+                        <Tab text="Vectores">
+                           <content>
+                              <fx:include fx:id="panelVectores" source="panelVectores.fxml" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="tabMallas" text="Mallas">
+                           <content>
+                              <fx:include fx:id="panelMallas" source="panelMallas.fxml" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="tabTriangulacion" text="Triangulación">
+                           <content>
+                              <fx:include fx:id="panelTriangulacion" source="panelTriangulacion.fxml" />
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+                  <VBox prefWidth="280.0" minWidth="220.0" spacing="4.0">
+                     <padding>
+                        <Insets bottom="6.0" right="6.0" top="6.0" />
+                     </padding>
+                     <children>
+                        <Label text="Consola de resultados:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="txtConsola" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </items>
+      </SplitPane>
    </children>
 </AnchorPane>

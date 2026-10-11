@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="contenedorPrincipal" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controles.planoCartesianoController">
+   <children>
+      <Canvas fx:id="lienzo" height="600.0" width="900.0" />
+   </children>
+</AnchorPane>

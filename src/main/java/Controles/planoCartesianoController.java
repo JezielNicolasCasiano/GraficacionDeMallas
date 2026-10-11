@@ -1,5 +1,8 @@
 package Controles;
 
+import Modelos.Malla;
+import Modelos.Poligono;
+import Modelos.Punto;
 import Modelos.PlanoCartesiano.Plano;
 import Modelos.PlanoCartesiano.Punto2D;
 import Modelos.PlanoCartesiano.Vector2D;
@@ -12,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class planoCartesianoController {
@@ -44,6 +49,10 @@ public class planoCartesianoController {
     private double anchoLienzo;
     private double altoLienzo;
 
+    private Malla malla;
+    private List<Poligono> triangulos = new ArrayList<>();
+    private List<Integer> puntosSeleccionados = new ArrayList<>();
+
     @FXML
     private void initialize() {
         g = lienzo.getGraphicsContext2D(); //inicializacion de la clase dedicada
@@ -71,7 +80,11 @@ public class planoCartesianoController {
         g.clearRect(0, 0, anchoLienzo, altoLienzo);
         dibujarCuadricula(calcularPaso());
         dibujarEjes();
+        g.setFill(Color.BLACK);
         dibujarNumeros();
+        dibujarMalla();
+        dibujarTriangulos();
+        dibujarVerticesMalla();
         for (Vector2D vectores : planoMatematico.getVectores2D()){
             dibujarVector2D(vectores.getVectorX(), vectores.getVectorY());
         }
@@ -312,6 +325,88 @@ public class planoCartesianoController {
 
     private double yPixelAMatematico(double pixelY) {
         return (pixelOrigenY() - pixelY) / escala;
+    }
+
+    private void dibujarMalla() {
+        if (malla == null) return;
+        List<Punto> vertices = malla.getVertices();
+        for (Poligono poligono : malla.getPoligonos()) {
+            trazarPoligono(poligono, vertices);
+            g.setFill(Color.rgb(30, 144, 255, 0.18));
+            g.fill();
+            g.setStroke(Color.rgb(20, 60, 140));
+            g.setLineWidth(2);
+            g.stroke();
+        }
+    }
+
+    private void dibujarTriangulos() {
+        if (malla == null || triangulos.isEmpty()) return;
+        List<Punto> vertices = malla.getVertices();
+        g.setLineWidth(1.5);
+        for (Poligono triangulo : triangulos) {
+            trazarPoligono(triangulo, vertices);
+            g.setFill(Color.rgb(30, 144, 255, 0.25));
+            g.fill();
+            g.setStroke(Color.rgb(20, 60, 140));
+            g.stroke();
+        }
+    }
+
+    private void dibujarVerticesMalla() {
+        if (malla == null) return;
+        List<Punto> vertices = malla.getVertices();
+        for (int i = 0; i < vertices.size(); i++) {
+            double pixelX = xMatematicoAPixel(vertices.get(i).getX());
+            double pixelY = yMatematicoAPixel(vertices.get(i).getY());
+            boolean seleccionado = puntosSeleccionados.contains(i);
+            double radio = seleccionado ? radioPuntoPixeles * 1.5 : radioPuntoPixeles;
+            if (pixelFueraDeRango(pixelX, pixelY, radio)) continue;
+            g.setFill(seleccionado ? Color.RED : Color.BLACK);
+            g.fillOval(pixelX - radio, pixelY - radio, 2 * radio, 2 * radio);
+        }
+    }
+
+    private void trazarPoligono(Poligono poligono, List<Punto> vertices) {
+        int[] indices = poligono.getIndicesVertices();
+        g.beginPath();
+        for (int i = 0; i < indices.length; i++) {
+            Punto p = vertices.get(indices[i]);
+            if (i == 0) {
+                g.moveTo(xMatematicoAPixel(p.getX()), yMatematicoAPixel(p.getY()));
+            } else {
+                g.lineTo(xMatematicoAPixel(p.getX()), yMatematicoAPixel(p.getY()));
+            }
+        }
+        g.closePath();
+    }
+
+    public void setMalla(Malla malla) {
+        this.malla = malla;
+        dibujar();
+    }
+
+    public void setTriangulos(List<Poligono> triangulos) {
+        this.triangulos = new ArrayList<>(triangulos);
+        dibujar();
+    }
+
+    public boolean tieneTriangulos() {
+        return !triangulos.isEmpty();
+    }
+
+    public void limpiarTriangulos() {
+        triangulos.clear();
+        dibujar();
+    }
+
+    public void setPuntosSeleccionados(List<Integer> puntosSeleccionados) {
+        this.puntosSeleccionados = new ArrayList<>(puntosSeleccionados);
+        dibujar();
+    }
+
+    public void redibujar() {
+        dibujar();
     }
 
     public Canvas getLienzo() {

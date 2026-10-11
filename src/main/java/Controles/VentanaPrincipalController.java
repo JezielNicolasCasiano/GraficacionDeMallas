@@ -1,33 +1,54 @@
 package Controles;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.layout.VBox;
 
-import java.io.IOException;
+import Modelos.Malla;
+import Modelos.PlanoCartesiano.Punto2D;
+import Modelos.PlanoCartesiano.Vector2D;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
+
+import java.util.List;
+
 public class VentanaPrincipalController {
 
-    @FXML private VBox contenedorMallas; // Debe coincidir con el fx:id de la vista principal
+    @FXML private planoCartesianoController planoCartesianoController;
+    @FXML private panelPuntosController panelPuntosController;
+    @FXML private panelVectoresController panelVectoresController;
+    @FXML private panelMallasController panelMallasController;
+    @FXML private panelTriangulacionController panelTriangulacionController;
+
+    @FXML private TabPane pestanas;
+    @FXML private Tab tabPuntos;
+    @FXML private Tab tabMallas;
+    @FXML private Tab tabTriangulacion;
+    @FXML private TextArea txtConsola;
+
+    private final Malla malla = new Malla();
+    private final ObservableList<Punto2D> listaPuntos = FXCollections.observableArrayList();
+    private final ObservableList<Vector2D> listaVectores = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        cargarPanelMallas();
+        planoCartesianoController.setMalla(malla);
+        panelPuntosController.configurar(planoCartesianoController, malla, listaPuntos, listaVectores, txtConsola);
+        panelVectoresController.configurar(planoCartesianoController, listaVectores, txtConsola);
+        panelMallasController.configurar(planoCartesianoController, malla, listaPuntos, txtConsola);
+        panelTriangulacionController.configurar(planoCartesianoController, malla, listaPuntos, txtConsola);
+
+        pestanas.getSelectionModel().selectedItemProperty().addListener((o, anterior, actual) -> {
+            if (actual == tabPuntos) {
+                panelPuntosController.resaltarSeleccion();
+            } else if (actual == tabMallas) {
+                panelMallasController.resaltarSeleccion();
+            } else {
+                planoCartesianoController.setPuntosSeleccionados(List.of());
+            }
+            if (actual == tabTriangulacion) {
+                panelTriangulacionController.actualizarPoligonos();
+            }
+        });
     }
-
-    private void cargarPanelMallas() {
-        try {
-            // Cargar el archivo FXML correspondiente a la malla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/jeziel/graficaciondemallas/panelMallas.fxml"));
-            Parent vistaMallas = loader.load();
-
-            // Limpiar contenido previo y agregar la vista cargada
-            contenedorMallas.getChildren().clear();
-            contenedorMallas.getChildren().add(vistaMallas);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error al cargar panelMallas.fxml: Verifica la ruta del archivo FXML.");
-        }
-    }
-
 }
