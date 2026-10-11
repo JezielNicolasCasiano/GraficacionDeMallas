@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox spacing="16.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controles.panelPuntosController">
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+   <children>
+      <VBox prefWidth="170.0" spacing="6.0" style="-fx-background-color: #f0f0f0; -fx-padding: 8; -fx-background-radius: 4;">
+         <children>
+            <Label text="Crear punto">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" spacing="4.0">
+               <children>
+                  <Label prefWidth="14.0" text="X" />
+                  <TextField fx:id="txtPX" onAction="#handleCrearPunto" prefWidth="110.0" promptText="0.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="4.0">
+               <children>
+                  <Label prefWidth="14.0" text="Y" />
+                  <TextField fx:id="txtPY" onAction="#handleCrearPunto" prefWidth="110.0" promptText="0.0" />
+               </children>
+            </HBox>
+            <Button fx:id="btnPunto" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleCrearPunto" text="Crear punto" />
+         </children>
+      </VBox>
+      <VBox prefWidth="170.0" spacing="4.0">
+         <children>
+            <Label text="Seleccionar punto A" />
+            <ComboBox fx:id="cBoxPuntoA" maxWidth="1.7976931348623157E308" />
+            <Label text="Seleccionar punto B" />
+            <ComboBox fx:id="cBoxPuntoB" maxWidth="1.7976931348623157E308" />
+            <Label text="Seleccionar vector" />
+            <ComboBox fx:id="cBoxVector" maxWidth="1.7976931348623157E308" />
+         </children>
+      </VBox>
+      <GridPane hgap="8.0" vgap="8.0">
+         <children>
+            <Button maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCalcularDistancia" text="Distancia de A a B" />
+            <TextField fx:id="txtDistancia" editable="false" prefWidth="170.0" GridPane.columnIndex="1" />
+            <Button maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleVectorHastaPunto" text="Vector de A a B" GridPane.rowIndex="1" />
+            <TextField fx:id="txtVectorAPunto" editable="false" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTrasladarPunto" text="Trasladar A con el vector" GridPane.rowIndex="2" />
+            <TextField fx:id="txtTrasladar" editable="false" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</HBox>
